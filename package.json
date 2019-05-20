@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=development jest",
+    "test:watch": "npm test -- --watch"
   },
   "author": "zhanglun@gmail.com",
   "license": "ISC",
@@ -21,5 +22,12 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2"
   }
 }

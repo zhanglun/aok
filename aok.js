@@ -21,6 +21,7 @@ class Aok extends Koa {
     super()
 
     this.config = config
+    this.listener = null
 
     this.init(config)
   }
@@ -31,11 +32,6 @@ class Aok extends Koa {
     this.keys = [ config.keys ]
 
     this.use(LoggerMiddleware())
-    // this.use(ErrorMiddleware({
-    //   engine: 'nunjucks',
-    //   cache: process.env === 'production',
-    //   template: path.resolve(__dirname, 'template', 'error.pug'),
-    // }))
     this.use(koaCompress({ threshold: 2048 }))
     this.use(koaConditional())
     this.use(koaEtag())
@@ -79,13 +75,17 @@ class Aok extends Koa {
   }
 
   start (cb) {
-    this.list(config.port, cb)
+    this.listener = this.listen(config.port, cb)
   }
 
   startWithWorker (cb) {
     cluster(() => {
       this.start(cb)
     })
+  }
+
+  close () {
+    this.listener.close()
   }
 }
 
